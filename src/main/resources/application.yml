@@ -1,0 +1,5 @@
+server:
+  port: 9091
+
+account:
+  url: http://localhost:9090

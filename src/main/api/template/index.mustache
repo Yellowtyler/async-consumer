@@ -1,0 +1,99 @@
+= {{{appName}}}
+{{#headerAttributes}}
+{{#version}}{{{version}}}{{/version}}
+:toc: left
+:toc-title: Содержание
+:version-label: Реализация:
+:last-update-label: Дата:
+:toclevels: 3
+:source-highlighter: highlightjs
+:keywords: openapi, rest, {{appName}}
+:specDir: {{specDir}}
+:snippetDir: {{snippetDir}}
+:generator-template: v1 2019-12-20
+:app-name: {{appName}}
+{{/headerAttributes}}
+
+== Методы API
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+
+
+{{#operation}}
+
+[.{{nickname}}]
+{{#useMethodAndPath}}
+=== {{httpMethod}} {{path}}
+
+Operation Id:: {{nickname}}
+
+{{/useMethodAndPath}}
+{{^useMethodAndPath}}
+=== {{nickname}}
+
+`{{httpMethod}} {{path}}`
+{{/useMethodAndPath}}
+
+
+==== Описание
+
+{{{summary}}}
+
+{{{notes}}}
+
+{{#specinclude}}{{path}}/{{httpMethod}}/spec.adoc{{/specinclude}}
+
+
+
+{{> params}}
+
+==== Возвращаемый тип
+
+{{#hasReference}}
+{{^returnSimpleType}}{{returnContainer}}[{{/returnSimpleType}}<<{{returnBaseType}}>>{{^returnSimpleType}}]{{/returnSimpleType}}
+{{/hasReference}}
+
+{{^hasReference}}
+{{#returnType}}<<{{returnType}}>>{{/returnType}}
+{{^returnType}}Отсутствует{{/returnType}}
+{{/hasReference}}
+
+{{#hasProduces}}
+==== Тип содержимого
+
+{{#produces}}
+* {{{mediaType}}}
+{{/produces}}
+{{/hasProduces}}
+
+==== Ответы
+
+[%header,cols=3*]
+|===
+|Код ответа
+|Описание
+|Возвращаемый тип
+
+{{#responses}}
+|{{code}}
+|{{message}}
+|{{^simpleType}}
+{{#hasReference}}
+{{^returnSimpleType}}{{returnContainer}}[{{/returnSimpleType}}<<{{returnBaseType}}>>{{^returnSimpleType}}]{{/returnSimpleType}}
+{{/hasReference}}
+{{/simpleType}}
+{{#simpleType}}{{#dataType}}<<{{dataType}}>>{{/dataType}}{{^dataType}}Отсутствует{{/dataType}}{{/simpleType}}
+{{/responses}}
+|===
+
+==== Спецификация операции
+include::{{specDir}}/{{nickname}}.adoc[]
+
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+
+{{> model}}

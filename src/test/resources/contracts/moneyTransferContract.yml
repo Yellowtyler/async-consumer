@@ -1,0 +1,29 @@
+description: >
+  Transfer money positive scenario.
+  from Mike`s account with id 1 and balance 1000 transfer 100 to Alex with id 2 and balance 200.
+  As a result return actual accounts info
+name: Should transfer money from one account to other
+request:
+  method: POST
+  url: /transfer
+  headers:
+    Content-type: application/json
+  body:
+    fromAccountNumber: "1"
+    toAccountNumber: "2"
+    amount: 100
+response:
+  status: 200
+  headers:
+    Content-Type: application/json
+  body:
+    from:
+      accountNumber: "1"
+      accountName: "MikeAccount"
+      accountStatus: "ACTIVE"
+      accountBalance: 900
+    to:
+      accountNumber: "2"
+      accountName: "AlexAccount"
+      accountStatus: "INACTIVE"
+      accountBalance: 300

@@ -1,0 +1,14 @@
+pluginManagement {
+    plugins {
+        id 'ru.uip.contract.specs' version "0.1"
+    }
+    resolutionStrategy {
+    }
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        mavenLocal()
+    }
+}
+
+rootProject.name = 'async-consumer'
