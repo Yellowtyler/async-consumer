@@ -1,0 +1,90 @@
+openapi: 3.0.3
+
+info:
+  title: API перевода средств
+  description: >
+    Учебный API, позволяющий осуществлять перевод средств между аккаунтами.
+    Аккаунт имеет уникальный текстовый идентификатор, имя владельца,
+    баланс (количество денег) и статус (активный/неактивный).
+  version: "1.0"
+
+servers:
+  - url: http://localhost:9091
+
+paths:
+  /transfer:
+    post:
+      summary: "Перевод средств с одного аккаунта на другой"
+      operationId: moneyTransfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoneyTransfer'
+      responses:
+        '200':
+          description: Успешный перевод средств
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoneyTransferResult'
+        '400':
+          description: Недостаточно средств
+        '404':
+          description: Несуществующий аккаунт
+
+components:
+  schemas:
+    MoneyTransfer:
+      type: "object"
+      required:
+        - fromAccountNumber
+        - toAccountNumber
+        - amount
+      properties:
+        fromAccountNumber:
+          type: "string"
+          description: "Аккаунт с котрого переводят деньги"
+        toAccountNumber:
+          type: "string"
+          description: "Аккаунт на который переводят деньги"
+        amount:
+          type: "number"
+          format: "double"
+          description: "Сумма перевода"
+
+    MoneyTransferResult:
+      type: "object"
+      properties:
+        from:
+          description: "Аккаунт с которого переводили деньги"
+          $ref: '#/components/schemas/JsonAccount'
+        to:
+          description: "Аккаунт на который перевели деньги"
+          $ref: '#/components/schemas/JsonAccount'
+
+    JsonAccount:
+      type: "object"
+      required:
+        - accountNumber
+        - accountName
+        - accountBalance
+        - accountStatus
+      properties:
+        accountNumber:
+          type: "string"
+          description: "Номер аккаунта"
+        accountName:
+          type: "string"
+          description: "Имя аккаунта"
+        accountBalance:
+          type: "number"
+          format: "double"
+          description: "Балланс аккаунта"
+        accountStatus:
+          type: "string"
+          description: "Статус аккаунта"
+          enum:
+            - "ACTIVE"
+            - "INACTIVE"
